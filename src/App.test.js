@@ -1,8 +1,17 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import App from "./App";
+import { fireEvent, render, screen } from "@testing-library/react";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe("Teste do componente App", () => {
+  test("deve renderizar o componente App", () => {
+   render(<App />);
+    expect(screen.getByText("Cadastrar")).toBeInTheDocument();
+  });
+  test("deve cadastrar uma tarefa", () => {
+    render(<App />)
+    fireEvent.change(screen.getByTestId("campo-tarefa"), {
+      target: { value: "Estudar Typescript" },
+    });
+    fireEvent.click(screen.getByTestId("botao-cadastrar"));
+    expect(screen.getByText("Estudar Typescript")).toBeInTheDocument();
+  });
 });
